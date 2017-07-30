@@ -1,10 +1,16 @@
 import com.typesafe.sbt.SbtGhPages.GhPagesKeys._
 import microsites.ExtraMdFileConfig
 
+lazy val licenceSettings = Seq(
+  bintrayRepository := "maven",
+  licenses += ("Apache-2.0", url("http://www.apache.org/licenses/"))
+)
+
 lazy val root = Project("elastic4s", file("."))
   .settings(publish := {})
   .settings(publishArtifact := false)
   .settings(name := "elastic4s")
+  .settings(licenceSettings)
   .settings(mappings in(Compile, packageSrc) ++= {
     val base = (sourceManaged in Compile).value
     val files = (managedSources in Compile).value
@@ -27,7 +33,7 @@ lazy val root = Project("elastic4s", file("."))
     xpacksecurity
   )
 
-lazy val licenceSettings = Seq(licenses += ("Apache-2.0", url("http://www.apache.org/licenses/")))
+
 
 lazy val core = Project("elastic4s-core", file("elastic4s-core"))
   .settings(name := "elastic4s-core")
