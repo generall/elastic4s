@@ -11,3 +11,5 @@ addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.3")
 // documentation
 addSbtPlugin("com.fortysevendeg"  % "sbt-microsites" % "0.4.0")
 addSbtPlugin("com.eed3si9n" % "sbt-unidoc" % "0.4.0")
+
+addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.5.1")

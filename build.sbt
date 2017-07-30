@@ -27,6 +27,8 @@ lazy val root = Project("elastic4s", file("."))
     xpacksecurity
   )
 
+lazy val licenceSettings = Seq(licenses += ("Apache-2.0", url("http://www.apache.org/licenses/")))
+
 lazy val core = Project("elastic4s-core", file("elastic4s-core"))
   .settings(name := "elastic4s-core")
   .settings(libraryDependencies ++= Seq(
@@ -34,7 +36,7 @@ lazy val core = Project("elastic4s-core", file("elastic4s-core"))
     "com.fasterxml.jackson.core"    % "jackson-core"            % JacksonVersion,
     "com.fasterxml.jackson.core"    % "jackson-databind"        % JacksonVersion,
     "com.fasterxml.jackson.module"  %% "jackson-module-scala"   % JacksonVersion
-  ))
+  )).settings(licenceSettings)
 
 lazy val tcp = Project("elastic4s-tcp", file("elastic4s-tcp"))
   .settings(name := "elastic4s-tcp")
@@ -67,7 +69,7 @@ lazy val tcp = Project("elastic4s-tcp", file("elastic4s-tcp"))
       "joda-time"                             % "joda-time"                 % "2.9.9",
       "com.fasterxml.jackson.core"            % "jackson-core"              % JacksonVersion,
       "com.tdunning"                          % "t-digest"                  % "3.1"
-    ))
+    )).settings(licenceSettings)
   .dependsOn(core)
 
 lazy val http = Project("elastic4s-http", file("elastic4s-http"))
@@ -84,7 +86,7 @@ lazy val http = Project("elastic4s-http", file("elastic4s-http"))
       "com.fasterxml.jackson.core"    % "jackson-databind"        % JacksonVersion,
       "com.fasterxml.jackson.module" %% "jackson-module-scala"    % JacksonVersion exclude("org.scala-lang", "scala-library")
     )
-  )
+  ).settings(licenceSettings)
   .dependsOn(core)
 
 lazy val xpacksecurity = Project("elastic4s-xpack-security", file("elastic4s-xpack-security"))
@@ -92,7 +94,7 @@ lazy val xpacksecurity = Project("elastic4s-xpack-security", file("elastic4s-xpa
     name := "elastic4s-xpack-security",
     resolvers += "elastic" at "https://artifacts.elastic.co/maven",
     libraryDependencies += "org.elasticsearch.client" % "x-pack-transport" % ElasticsearchVersion
-  ).dependsOn(tcp)
+  ).settings(licenceSettings).dependsOn(tcp)
 
 lazy val embedded = Project("elastic4s-embedded", file("elastic4s-embedded"))
   .settings(
@@ -102,7 +104,7 @@ lazy val embedded = Project("elastic4s-embedded", file("elastic4s-embedded"))
       "com.fasterxml.jackson.dataformat"      % "jackson-dataformat-smile"  % JacksonVersion,
       "com.fasterxml.jackson.dataformat"      % "jackson-dataformat-cbor"   % JacksonVersion
     )
-  )
+  ).settings(licenceSettings)
   .dependsOn(tcp, http)
 
 lazy val testkit = Project("elastic4s-testkit", file("elastic4s-testkit"))
@@ -111,7 +113,7 @@ lazy val testkit = Project("elastic4s-testkit", file("elastic4s-testkit"))
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % ScalatestVersion
     )
-  )
+  ).settings(licenceSettings)
   .dependsOn(core, embedded, http)
 
 //lazy val streams = Project("elastic4s-streams", file("elastic4s-streams"))
@@ -137,7 +139,7 @@ lazy val jackson = Project("elastic4s-jackson", file("elastic4s-jackson"))
     libraryDependencies += "com.fasterxml.jackson.core"       % "jackson-databind" % JacksonVersion,
     libraryDependencies += "com.fasterxml.jackson.module"     %% "jackson-module-scala" % JacksonVersion exclude("org.scala-lang", "scala-library"),
     libraryDependencies += "com.fasterxml.jackson.datatype"   % "jackson-datatype-joda" % JacksonVersion
-  ).dependsOn(core)
+  ).settings(licenceSettings).dependsOn(core)
 
 lazy val circe = Project("elastic4s-circe", file("elastic4s-circe"))
   .settings(
@@ -145,26 +147,26 @@ lazy val circe = Project("elastic4s-circe", file("elastic4s-circe"))
     libraryDependencies += "io.circe" %% "circe-core"     % CirceVersion,
     libraryDependencies += "io.circe" %% "circe-generic"  % CirceVersion,
     libraryDependencies += "io.circe" %% "circe-parser"   % CirceVersion
-  ).dependsOn(core)
+  ).settings(licenceSettings).dependsOn(core)
 
 lazy val json4s = Project("elastic4s-json4s", file("elastic4s-json4s"))
   .settings(
     name := "elastic4s-json4s",
     libraryDependencies += "org.json4s" %% "json4s-core"    % Json4sVersion,
     libraryDependencies += "org.json4s" %% "json4s-jackson" % Json4sVersion
-  ).dependsOn(core)
+  ).settings(licenceSettings).dependsOn(core)
 
 lazy val playjson = Project("elastic4s-play-json", file("elastic4s-play-json"))
   .settings(
     name := "elastic4s-play-json",
     libraryDependencies += "com.typesafe.play" %% "play-json" % PlayJsonVersion
-  ).dependsOn(core)
+  ).settings(licenceSettings).dependsOn(core)
 
 lazy val sprayjson = Project("elastic4s-spray-json", file("elastic4s-spray-json"))
   .settings(
     name := "elastic4s-spray-json",
     libraryDependencies += "io.spray" %% "spray-json" % SprayJsonVersion
-  ).dependsOn(core)
+  ).settings(licenceSettings).dependsOn(core)
 
 //lazy val tests = Project("elastic4s-tests", file("elastic4s-tests"))
 //  .settings(
@@ -223,7 +225,7 @@ lazy val docs = project
     includeFilter in makeSite := "*.html" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.swf" | "*.yml" | "*.md",
     // push microsite on release
     releaseProcess += releaseStepTask(publishMicrosite)
-  ).dependsOn(core, embedded, http, circe)
+  ).settings(licenceSettings).dependsOn(core, embedded, http, circe)
 
 lazy val noPublishSettings = Seq(
   publish := (),
